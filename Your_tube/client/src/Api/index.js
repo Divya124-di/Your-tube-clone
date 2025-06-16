@@ -1,7 +1,10 @@
 import axios from "axios"
 
 //  const API=axios.create({baseURL:`http://localhost:5000/`})
-const API = axios.create({ baseURL: `https://your-tube-clone-rmd1.onrender.com/ `});
+const API = axios.create({
+  baseURL: `https://your-tube-clone-rmd1.onrender.com/`,
+});
+
 
 API.interceptors.request.use((req)=>{
     if(localStorage.getItem("Profile")){
