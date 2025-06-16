@@ -1,6 +1,5 @@
 import React from 'react'
 import Showvideo from "../Showvideo/Showvideo"
-//import vid from "../Video/vid.mp4"
 import { useSelector } from 'react-redux'
 const Showvideolist = ({videoid}) => {
   const vids=useSelector(state=>state.videoreducer)

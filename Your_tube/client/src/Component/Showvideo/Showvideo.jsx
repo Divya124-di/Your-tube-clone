@@ -8,7 +8,7 @@ const Showvideo = ({ vid }) => {
     <>
       <Link to={`/videopage/${vid._id}`}>
         <video
-          src={process.env.REACT_APP_BACKEND_URL`${vid.filepath}`}
+          src={`${process.env.REACT_APP_BACKEND_URL}${vid.filepath}`}
           className="video_ShowVideo"
           controls
         />

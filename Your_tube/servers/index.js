@@ -14,7 +14,7 @@ const app = express();
 // 🛠️ FIX: Allow PATCH and headers for CORS
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "https://your-tube-clone-chi.vercel.app/",
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
