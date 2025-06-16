@@ -52,7 +52,7 @@ const Videopage = () => {
         <div className="container2_videoPage">
           <div className="video_display_screen_videoPage">
             <video
-              src={`${process.env.REACT_APP_BACKEND_URL}${vv?.filepath}`}
+              src={`https://your-tube-clone-rmd1.onrender.com/${vv?.filepath}`}
               className="video_ShowVideo_videoPage"
               controls
             ></video>
