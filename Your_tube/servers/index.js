@@ -13,11 +13,7 @@ const app = express();
 
 // 🛠️ FIX: Allow PATCH and headers for CORS
 app.use(
-  cors({
-    origin: "https://your-tube-clone-chi.vercel.app/",
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
+  cors()
 );
 
 app.use(express.json({ limit: "30mb", extended: true }));
