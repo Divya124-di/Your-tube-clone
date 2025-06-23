@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import logo from "./logo.ico";
 import "./Navbar.css";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, generatePath } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { RiVideoAddLine } from "react-icons/ri";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { BiUserCircle } from "react-icons/bi";
@@ -12,35 +12,45 @@ import axios from "axios";
 import { login } from "../../action/auth";
 import { useGoogleLogin, googleLogout } from "@react-oauth/google";
 import { setcurrentuser } from "../../action/currentuser";
-
 import { jwtDecode } from "jwt-decode";
+
 const Navbar = ({ toggledrawer, seteditcreatechanelbtn }) => {
   const [authbtn, setauthbtn] = useState(false);
   const [user, setuser] = useState(null);
   const [profile, setprofile] = useState([]);
-  const dispatch = useDispatch();
+  const [points, setPoints] = useState(0); // ✅ added
 
+  const dispatch = useDispatch();
   const currentuser = useSelector((state) => state.currentuserreducer);
-  // console.log(currentuser)
+
+  // ✅ Fetch user points from backend
+  useEffect(() => {
+    const fetchPoints = async () => {
+      try {
+        if (currentuser?.result?._id) {
+          const res = await fetch(
+            `https://your-tube-clone-rmd1.onrender.com/user/profile/${currentuser?.result?._id}`
+          );
+          console.log(currentuser?.result?._id);          
+          const data = await res.json();
+          setPoints(data.points || 0);
+        }
+      } catch (err) {
+        console.error("Failed to fetch points:", err);
+      }
+    };
+    fetchPoints();
+  }, [currentuser]);
+
   const successlogin = () => {
     if (profile.email) {
       dispatch(login({ email: profile.email }));
       console.log(profile.email);
     }
   };
-  // console.log(currentuser)
-  // const currentuser={
-  //     result:{
-  //         _id:1,
-  //         name:"abcjabsc",
-  //         email:"abcd@gmail.com",
-  //         joinedon:"222-07-134"
-  //     }
-  // }
 
   const google_login = useGoogleLogin({
     onSuccess: (tokenResponse) => setuser(tokenResponse),
-
     onError: (error) => console.log("Login Failed", error),
   });
 
@@ -69,12 +79,13 @@ const Navbar = ({ toggledrawer, seteditcreatechanelbtn }) => {
         });
     }
   }, [user]);
-  
+
   const logout = () => {
     dispatch(setcurrentuser(null));
     googleLogout();
     localStorage.clear();
   };
+
   useEffect(() => {
     const token = currentuser?.token;
     if (token) {
@@ -85,6 +96,7 @@ const Navbar = ({ toggledrawer, seteditcreatechanelbtn }) => {
     }
     dispatch(setcurrentuser(JSON.parse(localStorage.getItem("Profile"))));
   }, [currentuser?.token, dispatch]);
+
   return (
     <>
       <div className="Container_Navbar">
@@ -99,6 +111,7 @@ const Navbar = ({ toggledrawer, seteditcreatechanelbtn }) => {
             <p className="logo_title_navbar">Your-Tube</p>
           </Link>
         </div>
+
         <Searchbar />
         <RiVideoAddLine size={22} className={"vid_bell_Navbar"} />
         <div className="apps_Box">
@@ -112,31 +125,31 @@ const Navbar = ({ toggledrawer, seteditcreatechanelbtn }) => {
           <p className="appBox"></p>
           <p className="appBox"></p>
         </div>
-
         <IoMdNotificationsOutline size={22} className={"vid_bell_Navbar"} />
+
         <div className="Auth_cont_Navbar">
           {currentuser ? (
             <>
+              {/* ✅ Show User Points */}
+              <div className="points_display_navbar">🏆 {points} pts</div>
+
               <div className="Chanel_logo_App" onClick={() => setauthbtn(true)}>
                 <p className="fstChar_logo_App">
-                  {currentuser?.result.name ? (
-                    <>{currentuser?.result.name.charAt(0).toUpperCase()}</>
-                  ) : (
-                    <>{currentuser?.result.email.charAt(0).toUpperCase()}</>
-                  )}
+                  {currentuser?.result.name
+                    ? currentuser.result.name.charAt(0).toUpperCase()
+                    : currentuser?.result.email.charAt(0).toUpperCase()}
                 </p>
               </div>
             </>
           ) : (
-            <>
-              <p className="Auth_Btn" onClick={() => google_login()}>
-                <BiUserCircle size={22} />
-                <b>Sign in</b>
-              </p>
-            </>
+            <p className="Auth_Btn" onClick={() => google_login()}>
+              <BiUserCircle size={22} />
+              <b>Sign in</b>
+            </p>
           )}
         </div>
       </div>
+
       {authbtn && (
         <Auth
           seteditcreatechanelbtn={seteditcreatechanelbtn}

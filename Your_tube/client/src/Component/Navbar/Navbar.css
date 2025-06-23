@@ -66,3 +66,18 @@
     padding: 0.5rem;
     border-radius: 0.1rem;
 }
+
+.points_display_navbar {
+    font-size: 13px;
+    color: #3ea6ff;
+    background-color: transparent;
+    padding: 0.6rem 0.8rem;
+    margin: auto 0.5rem;
+    border: 1px solid #3ea6ff;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    height: fit-content;
+  }
+  

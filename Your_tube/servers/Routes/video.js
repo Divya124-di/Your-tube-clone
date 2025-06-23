@@ -5,6 +5,7 @@ import {
   uploadvideo,
   getallvideos,
   deletevideo,
+  updatePoints,
 } from "../Controllers/video.js"; // ✅ add deletevideo
 import {
   historycontroller,
@@ -44,5 +45,8 @@ routes.delete("/deletewatchlater/:videoid/:viewer", auth, deletewatchlater);
 routes.post("/likevideo", auth, likedvideocontroller);
 routes.get("/getalllikevide", getalllikedvideo);
 routes.delete("/deletelikevideo/:videoid/:viewer", auth, deletelikedvideo);
+
+routes.post("/watch",  updatePoints); // ✅ secured with auth
+
 
 export default routes;

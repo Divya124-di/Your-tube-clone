@@ -28,6 +28,8 @@ app.get("/", (req, res) => {
 app.use("/user", userroutes);
 app.use("/video", videoroutes);
 app.use("/comment", commentroutes);
+app.use("/video", videoroutes); // ✅ so the route becomes /video/watch
+
 
 const PORT = process.env.PORT || 5000;
 
