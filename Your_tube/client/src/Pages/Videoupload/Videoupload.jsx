@@ -24,22 +24,23 @@ const Videoupload = ({ setvideouploadpage }) => {
         },
     };
     const uploadvideofile = () => {
-        if (!title) {
-            alert("plz enter a title of the video")
-        } else if (!videofile) {
-            alert("plz attach a video file");
-        } else if (videofile.size > 1000000) {
-            alert("Plz attach video file less than 1 kb")
-        } else {
-            const filedata = new FormData()
-            filedata.append("file", videofile)
-            filedata.append("title", title)
-            filedata.append("chanel", currentuser?.result?._id)
-            filedata.append("uploader", currentuser?.result.name)
-            // console.log(videofile)
-            dispatch(uploadvideo({ filedata: filedata, fileoption: fileoption }))
-        }
-    }
+      if (!title) {
+        alert("plz enter a title of the video");
+      } else if (!videofile) {
+        alert("plz attach a video file");
+      } else if (videofile.size > 1000000) {
+        alert("Plz attach video file less than 1 kb");
+      } else {
+        const filedata = new FormData();
+        filedata.append("file", videofile);
+        filedata.append("title", title);
+        filedata.append("chanel", currentuser?.result?._id);
+        filedata.append("uploader", currentuser?.result.name);
+        filedata.append("uploaderId", currentuser?.result?._id); // ✅ Add this
+
+        dispatch(uploadvideo({ filedata: filedata, fileoption: fileoption }));
+      }
+    };
     return (
         <div className="container_VidUpload">
             <input type="submit" name='text' value={"X"} onClick={() => setvideouploadpage(false)} className="ibtn_x" />

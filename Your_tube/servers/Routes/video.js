@@ -24,6 +24,7 @@ import {
 } from "../Controllers/likedvideo.js";
 import upload from "../Helper/filehelper.js";
 import auth from "../middleware/auth.js";
+import { downloadVideo } from "../Controllers/downloadVideo.js"; // ✅ import downloadVideo controller
 
 const routes = express.Router();
 
@@ -46,7 +47,9 @@ routes.post("/likevideo", auth, likedvideocontroller);
 routes.get("/getalllikevide", getalllikedvideo);
 routes.delete("/deletelikevideo/:videoid/:viewer", auth, deletelikedvideo);
 
-routes.post("/watch",  updatePoints); // ✅ secured with auth
+routes.post("/watch", auth, updatePoints); // ✅ secured with auth
+
+routes.post("/download/:videoId", auth, downloadVideo);
 
 
 export default routes;

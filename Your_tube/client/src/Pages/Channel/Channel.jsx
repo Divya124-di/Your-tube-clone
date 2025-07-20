@@ -6,7 +6,15 @@ import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 const Channel = ({seteditcreatechanelbtn,setvideouploadpage}) => {
   const {cid}=useParams()
-  const vids=useSelector(state=>state.videoreducer)?.data?.filter(q=>q?.videochanel===cid).reverse()
+  const vids=useSelector(state=>state.videoreducer)?.data?.filter(q=>q?.videochanel===cid).reverse();
+
+  console.log("cid from URL:", cid);
+  console.log(
+    "All videos from Redux:",
+    useSelector((state) => state.videoreducer)
+  );
+  console.log("Filtered videos:", vids);
+
   return (
     <div className="container_Pages_App">
       <Leftsidebar/>

@@ -12,13 +12,23 @@ dotenv.config();
 const app = express();
 
 // 🛠️ FIX: Allow PATCH and headers for CORS
+
+
+// ✅ Use this instead of plain `app.use(cors())`
 app.use(
-  cors()
+  cors({
+    origin: "*", // or replace "*" with your frontend URL
+    methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
 );
+
+
+
 
 app.use(express.json({ limit: "30mb", extended: true }));
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
-app.use("/uploads", express.static(path.join("uploads")));
+app.use("/uploads", express.static(path.join(path.resolve(), "uploads")));
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {

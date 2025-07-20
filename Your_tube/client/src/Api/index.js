@@ -2,8 +2,10 @@ import axios from "axios"
 
 //  const API=axios.create({baseURL:`http://localhost:5000/`})
 const API = axios.create({
-  baseURL: `https://your-tube-clone-rmd1.onrender.com/`,
+  baseURL: process.env.REACT_APP_BACKEND_URL || "http://localhost:5000",
 });
+
+
 
 
 API.interceptors.request.use((req)=>{
@@ -22,6 +24,8 @@ export const uploadvideo=(filedata,fileoption)=>API.post("/video/uploadvideo",fi
 export const getvideos=()=>API.get("/video/getvideos");
 export const likevideo=(id,Like)=>API.patch(`/video/like/${id}`,{Like});
 export const viewsvideo=(id)=>API.patch(`/video/view/${id}`);
+export const deletevideo = (id) => API.delete(`/video/delete/${id}`);
+
 
 export const postcomment=(commentdata)=>API.post('/comment/post',commentdata)
 export const deletecomment=(id)=>API.delete(`/comment/delete/${id}`)

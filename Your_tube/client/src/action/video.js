@@ -58,5 +58,17 @@ export const viewvideo=(viewdata)=>async(dispatch)=>{
 // };
 
 
+export const deletevideo = (videoId) => async (dispatch) => {
+  try {
+    await api.deletevideo(videoId); // API call to backend
+    dispatch({ type: "DELETE_VIDEO", payload: videoId }); // optional if reducer handles it
+    dispatch(getallvideo()); // refresh video list
+  } catch (error) {
+    console.log("Delete video error:", error);
+  }
+};
+  
+  
+
 
 

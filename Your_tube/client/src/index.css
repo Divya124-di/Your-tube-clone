@@ -20,3 +20,15 @@ code {
   background-color: grey;
   border-radius: 5rem;
 }
+
+/* default = dark */
+body[data-theme="dark"] {
+  background-color: #121212;
+  color: white;
+}
+
+/* white/light theme */
+body[data-theme="light"] {
+  background-color: #ffffff;
+  color: black;
+}

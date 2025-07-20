@@ -80,3 +80,9 @@
     flex-grow: 1;
     background-color: rgba(0, 0, 0, 0.488);
   }
+  /* Add this to your DrawerSliderbar CSS */
+@media (max-width: 768px) {
+  .container_DrawaerLeftSidebar{
+    display: none;
+  }
+}

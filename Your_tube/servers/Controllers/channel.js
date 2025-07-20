@@ -1,43 +1,47 @@
 import mongoose from "mongoose";
-import users from "../Models/Auth.js"
-export const updatechaneldata=async(req,res)=>{
-    const {id:_id}=req.params;
-    const {name,desc}=req.body;
-    if(!mongoose.Types.ObjectId.isValid(_id)){
-        return res.status(400).send("Channel unavailable..")
-    }
-    try {
-        const updatedata=await users.findByIdAndUpdate(
-            _id,{
-                $set:{
-                    name:name,
-                    desc:desc,
-                },
-            },
-            {new:true}
-        );
-        res.status(200).json(updatedata)
-    } catch (error) {
-        res.status(405).json({message:error.message})
-        return
-    }
-}
+import User from "../Models/Auth.js"; // ✅ Correct model name
 
-export const getallchanels=async(req,res)=>{
-    try {
-        const allchanels=await users.find();
-        const allchaneldata=[]
-        allchanels.forEach((channel)=>{
-            allchaneldata.push({
-                _id:channel._id,
-                name:channel.name,
-                email:channel.email,
-                desc:channel.desc
-            });
-        });
-        res.status(200).json(allchaneldata)
-    } catch (error) {
-        res.status(405).json({message:error.message})
-        return
+// ✅ PATCH: /user/update/:id
+export const updatechaneldata = async (req, res) => {
+  const { id: _id } = req.params;
+  const { name, desc } = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(_id)) {
+    return res.status(400).json({ message: "Invalid user ID" });
+  }
+
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      _id,
+      { $set: { name, desc } },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
     }
-}
+
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    console.error("❌ Update error:", error);
+    res.status(500).json({ message: error.message || "Server error" });
+  }
+};
+
+// ✅ GET: /user/getallchannel
+export const getallchanels = async (req, res) => {
+  try {
+    const allchannels = await User.find();
+    const allchaneldata = allchannels.map((channel) => ({
+      _id: channel._id,
+      name: channel.name,
+      email: channel.email,
+      desc: channel.desc,
+    }));
+
+    res.status(200).json(allchaneldata);
+  } catch (error) {
+    console.error("❌ Get All Channels Error:", error);
+    res.status(500).json({ message: error.message });
+  }
+};

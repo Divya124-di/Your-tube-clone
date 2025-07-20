@@ -1,0 +1,19 @@
+.MobileHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 16px;
+  background-color: white;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.mobileLogo {
+  width: 90px;
+  height: auto;
+}
+
+@media (min-width: 768px) {
+  .MobileHeader {
+    display: none;
+  }
+}
