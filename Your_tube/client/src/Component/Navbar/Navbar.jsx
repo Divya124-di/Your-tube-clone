@@ -37,6 +37,9 @@ const Navbar = ({ toggledrawer, seteditcreatechanelbtn }) => {
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
+    const backendURL =
+      process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
+
 useEffect(() => {
   const check = () => setIsMobile(window.innerWidth <= 768);
   window.addEventListener("resize", check);
@@ -163,7 +166,7 @@ useEffect(() => {
   
   const handleVerifyOtp = async () => {
     try {
-      const res = await axios.post("http://localhost:5000/user/verify-otp", {
+      const res = await axios.post(`${backendURL}/user/verify-otp`, {
         email: profile.email,
         otp: enteredOtp,
       });
@@ -183,7 +186,7 @@ useEffect(() => {
     }
 
     try {
-      const res = await axios.post("http://localhost:5000/user/verify-otp", {
+      const res = await axios.post(`${backendURL}/user/verify-otp`, {
         email: tempLoginData.email,
         phone: tempLoginData.phone,
         otp: enteredOtp,

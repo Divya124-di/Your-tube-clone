@@ -12,7 +12,7 @@ const Profile = () => {
 
   const handleRazorpayPayment = async () => {
     try {
-      const res = await fetch("http://localhost:5000/user/payment/order", {
+      const res = await fetch(`${backendURL}/user/payment/order`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -32,19 +32,16 @@ const Profile = () => {
         handler: async function (response) {
           // ✅ VERIFY PAYMENT
           try {
-            const verifyRes = await fetch(
-              "http://localhost:5000/user/payment/verify",
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  userId: currentuser?.result._id,
-                  paymentId: response.razorpay_payment_id,
-                }),
-              }
-            );
+            const verifyRes = await fetch(`${backendURL}/user/payment/verify`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                userId: currentuser?.result._id,
+                paymentId: response.razorpay_payment_id,
+              }),
+            });
 
             const data = await verifyRes.json();
             if (verifyRes.ok) {
